@@ -1,0 +1,2 @@
+<h3>Welcome {{ $user->name }}, Your E-mail is {{ $user->email }} </h3><br>
+<form method="POST" action="{{ route('logout') }}">@csrf<a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a></form>
