@@ -198,3 +198,6 @@ button:disabled {
   .no-resize {
     resize: none;
   }
+  .orgcard {
+    text-decoration: none;
+  }

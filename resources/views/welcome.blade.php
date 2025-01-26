@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -112,7 +113,9 @@
       <div class="container">
         <h4 class="mb-2 mt-3">Recent Experience</h4>
         <div class="row">
-            <div class="col-md-12 mt-1 mb-4">
+          <form id="organizationFilterForm" method="post">
+            @csrf
+            <div class="col-md-12 mt-2">
                 <select name="organizationFilter" class="form-select" id="organizationFilter">
                     <option value="">Select Organization</option>
                     @foreach ($organizations as $organization)
@@ -120,31 +123,83 @@
                     @endforeach
                 </select>
             </div>
+          </form>
             @foreach ($organizations as $organization)
                 <div class="col-md-4 mt-2 mb-2">
+                  @if ($organization->ratings->count() > 0)
+                    <a href="{{ route('fillter.orgnization', $organization->name) }}" class="orgcard">
+                      <div class="card">
+                          <div class="card-body">
+                              <h5 class="card-title">{{ $organization->name }}</h5>
+                              <small>
+                                  Total Rating: {{ $organization->ratings->count() }}
+                              </small>
+                              <br>
+                              @php
+                                  $averageRating = round($organization->ratings->avg('rating') ?? 0); // Round to nearest whole number
+                              @endphp
+                              @for ($i = 1; $i <= 5; $i++)
+                                  @if ($i <= $averageRating)
+                                      <span class="filled-star">★</span> <!-- Filled Star -->
+                                  @else
+                                      <span class="filled-star">☆</span> <!-- Empty Star -->
+                                  @endif
+                              @endfor
+                          </div>
+                      </div>
+                    </a>
+                  @else
                     <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $organization->name }}</h5>
-                            <small>
-                                Total Rating: {{ $organization->ratings->count() }}
-                            </small>
-                            <br>
-                            @php
-                                $averageRating = round($organization->ratings->avg('rating') ?? 0); // Round to nearest whole number
-                            @endphp
-                            @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $averageRating)
-                                    <span class="filled-star">★</span> <!-- Filled Star -->
-                                @else
-                                    <span class="filled-star">☆</span> <!-- Empty Star -->
-                                @endif
-                            @endfor
-                        </div>
+                      <div class="card-body">
+                          <h5 class="card-title">{{ $organization->name }}</h5>
+                          <small>
+                              Total Rating: {{ $organization->ratings->count() }}
+                          </small>
+                          <br>
+                          @php
+                              $averageRating = round($organization->ratings->avg('rating') ?? 0); // Round to nearest whole number
+                          @endphp
+                          @for ($i = 1; $i <= 5; $i++)
+                              @if ($i <= $averageRating)
+                                  <span class="filled-star">★</span> <!-- Filled Star -->
+                              @else
+                                  <span class="filled-star">☆</span> <!-- Empty Star -->
+                              @endif
+                          @endfor
+                      </div>
                     </div>
+                  @endif
                 </div>
             @endforeach
         </div>
       </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+{{-- <script>
+  $(document).ready(function () {
+      $('#organizationFilter').on('change', function () {
+          const organizationId = $(this).val(); // Get selected organization ID
+
+          if (organizationId) {
+              $.ajax({
+                  url: "{{ route('fillter.orgnization', ':id') }}".replace(':id', organizationId),
+                  method: 'POST',
+                  data: {
+                      _token: "{{ csrf_token() }}", // CSRF token for security
+                      organizationFilter: organizationId,
+                  },
+                  success: function (response) {
+                      // Handle success response (e.g., update UI or show a message)
+                      console.log(response);
+                  },
+                  error: function (xhr) {
+                      // Handle error response
+                      console.error(xhr.responseText);
+                  },
+              });
+          }
+      });
+  });
+</script> --}}
 </body>
 </html>

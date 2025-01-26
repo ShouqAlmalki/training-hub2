@@ -13,8 +13,9 @@ class OrgRatingController extends Controller
     {
         $user = auth()->user();
         $orgnizationid = $user->planReport->organization_id;
+        $notifications = auth()->user()->notifications;
         $orgnization = Organization::where("id", $orgnizationid)->first();
-        return view("student.orgRating", compact("user","orgnization"));
+        return view("student.orgRating", compact("user","orgnization","notifications"));
     }
 
     public function store (Request $request) 

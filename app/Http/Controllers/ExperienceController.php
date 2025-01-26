@@ -14,6 +14,7 @@ class ExperienceController extends Controller
         $organizations = Organization::with('ratings')
         ->withAvg('ratings', 'rating') // Assumes your `ratings` table has a `rating` column
         ->get();
-        return view('experiance', compact('organizations', 'user'));
+        $notifications = auth()->user()->notifications;
+        return view('experiance', compact('organizations', 'user', 'notifications'));
     }
 }

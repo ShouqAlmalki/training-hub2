@@ -6,8 +6,7 @@
             © <script>
               document.write(new Date().getFullYear())
             </script>,
-            made by
-            <a href="#" class="font-weight-bold" target="_blank">Mahmoud Saber</a>
+            TrainingHub
           </div>
         </div>
       </div>

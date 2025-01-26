@@ -21,7 +21,8 @@ class FinalReportController extends Controller
     public function create()
     {
         $user = auth()->user();
-        return view("student.finalForm", compact("user"));
+        $notifications = auth()->user()->notifications;
+        return view("student.finalForm", compact("user", "notifications"));
     }
 
     /**

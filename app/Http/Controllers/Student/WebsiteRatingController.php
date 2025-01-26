@@ -10,7 +10,8 @@ class WebsiteRatingController extends Controller
     public function create () 
     {
         $user = auth()->user();
-        return view("student.websiteRating", compact("user"));
+        $notifications = auth()->user()->notifications;
+        return view("student.websiteRating", compact("user","notifications"));
     }
 
     public function store (Request $request)

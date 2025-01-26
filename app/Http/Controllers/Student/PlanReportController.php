@@ -24,7 +24,8 @@ class PlanReportController extends Controller
     {
         $user = auth()->user();
         $organizations = Organization::all();
-        return view("student.planForm", compact("user", 'organizations'));
+        $notifications = auth()->user()->notifications;
+        return view("student.planForm", compact("user", 'organizations', 'notifications'));
     }
 
     /**

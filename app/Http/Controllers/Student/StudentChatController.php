@@ -16,6 +16,7 @@ class StudentChatController extends Controller
     }
 
     $user = auth()->user();
+    $notifications = auth()->user()->notifications;
     $supervisor = $user->supervisor;
     // Fetch messages between the student and the supervisor
     $messages = Message::where(function ($query) use ($supervisor) {
@@ -26,7 +27,7 @@ class StudentChatController extends Controller
               ->where('recipient_id', auth()->id());
     })->get();
 
-    return view('student.chat', compact('supervisor', 'messages', 'user'));
+    return view('student.chat', compact('supervisor', 'messages', 'user','notifications'));
 }
 
 public function studentSend(Request $request)
