@@ -257,55 +257,54 @@
 </div>
 @endif
 
-@if ($student->ratings)
-<div class="modal fade" id="experianceReportModal{{ $student->id }}" tabindex="-1" aria-labelledby="experianceReportModal{{ $student->id }}" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="experianceReportModal{{ $student->id }}">Experiance Report Details For {{ $student->name }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 mt-1 mb-1">
-                        <label for="organization">Organization Name</label>
-                        <input type="text" class="form-control" value="{{ $organization->name }}" disabled>
-                    </div>
-                    <div class="col-md-6 mt-1 mb-1">
-                        <label for="overview">Overview</label>
-                        <input type="text" class="form-control" value="{{ $student->ratings->overview }}" disabled>
-                    </div>
-                    <div class="col-md-6 mt-1 mb-1">
-                        <label for="rating">Rate</label>
-                        <input type="text" class="form-control" value="{{ $student->ratings->rating }} of 5" disabled>
+    @if ($student->ratings)
+    <div class="modal fade" id="experianceReportModal{{ $student->id }}" tabindex="-1" aria-labelledby="experianceReportModal{{ $student->id }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="experianceReportModal{{ $student->id }}">Experiance Report Details For {{ $student->name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mt-1 mb-1">
+                            <label for="organization">Organization Name</label>
+                            <input type="text" class="form-control" value="{{ $organization->name }}" disabled>
+                        </div>
+                        <div class="col-md-6 mt-1 mb-1">
+                            <label for="overview">Overview</label>
+                            <input type="text" class="form-control" value="{{ $student->ratings->overview }}" disabled>
+                        </div>
+                        <div class="col-md-6 mt-1 mb-1">
+                            <label for="rating">Rate</label>
+                            <input type="text" class="form-control" value="{{ $student->ratings->rating }} of 5" disabled>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                @if ($student->ratings->status == 0)
-                    <form method="POST" action="{{ route('supervisor.expForm.reject', $student->ratings->id) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    </form>
-                    <form method="POST" action="{{ route('supervisor.expForm.accept', $student->ratings->id) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-success">Accept</button>
-                    </form>
-                    @elseif ($student->ratings->status == 2)
-                        <form method="POST" action="{{ route('supervisor.expForm.accept', $student->ratings->id) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-success">Accept</button>
-                        </form>
-                    @elseif ($student->ratings->status == 1)
+                <div class="modal-footer">
+                    @if ($student->ratings->status == 0)
                         <form method="POST" action="{{ route('supervisor.expForm.reject', $student->ratings->id) }}">
                             @csrf
                             <button type="submit" class="btn btn-danger">Reject</button>
                         </form>
-                @endif
+                        <form method="POST" action="{{ route('supervisor.expForm.accept', $student->ratings->id) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+                        @elseif ($student->ratings->status == 2)
+                            <form method="POST" action="{{ route('supervisor.expForm.accept', $student->ratings->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Accept</button>
+                            </form>
+                        @elseif ($student->ratings->status == 1)
+                            <form method="POST" action="{{ route('supervisor.expForm.reject', $student->ratings->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </form>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
-</div>
-@endif
-                
+    @endif        
 @endforeach

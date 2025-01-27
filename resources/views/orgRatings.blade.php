@@ -94,9 +94,23 @@
               <img src="{{ asset('assets/images/TrainingHub-logo.png') }}" alt="logo" width="200">
             </a>
           </div>    
-          <div class="col-md-3 text-end">
-            <a href="{{ route('login') }}" type="button" class="btn btn-outline-primary me-2">Login</a>
-          </div>
+          @auth
+              @if (auth()->user()->role == 'student')
+                  <div class="col-md-3 text-end">
+                      <a href="{{ route('student.dashboard') }}" type="button" class="btn btn-outline-primary me-2">Dashboard</a>
+                  </div>
+              @elseif (auth()->user()->role == 'supervisor')
+                  <div class="col-md-3 text-end">
+                      <a href="{{ route('supervisor.dashboard') }}" type="button" class="btn btn-outline-primary me-2">Dashboard</a>
+                  </div>
+              @endif
+            
+          @endauth
+          @guest
+              <div class="col-md-3 text-end">
+                  <a href="{{ route('login') }}" type="button" class="btn btn-outline-primary me-2">Login</a>
+              </div>
+          @endguest
         </header>
       </div>
 
@@ -106,7 +120,7 @@
           <div class="col-lg-6 mx-auto">
             <p class="fs-5 mb-4">A platform that brings together the student and his supervisor during <br> training. It helps them communicate, attach reports, and share the <br> student's experience in the institution in which he trained</p>
           </div>
-          <a href="{{ route('dashboard') }}" class="btn btn-primary">Back to home</a>
+          <a href="{{ url()->previous() }}" class="btn btn-primary">Back to home</a>
         </div>
       </div>
 

@@ -94,10 +94,24 @@
             <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
               <img src="{{ asset('assets/images/TrainingHub-logo.png') }}" alt="logo" width="200">
             </a>
-          </div>    
-          <div class="col-md-3 text-end">
-            <a href="{{ route('login') }}" type="button" class="btn btn-outline-primary me-2">Login</a>
           </div>
+          @auth
+              @if (auth()->user()->role == 'student')
+                  <div class="col-md-3 text-end">
+                      <a href="{{ route('student.dashboard') }}" type="button" class="btn btn-outline-primary me-2">Dashboard</a>
+                  </div>
+              @elseif (auth()->user()->role == 'supervisor')
+                  <div class="col-md-3 text-end">
+                      <a href="{{ route('supervisor.dashboard') }}" type="button" class="btn btn-outline-primary me-2">Dashboard</a>
+                  </div>
+              @endif
+            
+          @endauth
+          @guest
+              <div class="col-md-3 text-end">
+                  <a href="{{ route('login') }}" type="button" class="btn btn-outline-primary me-2">Login</a>
+              </div>
+          @endguest
         </header>
       </div>
 

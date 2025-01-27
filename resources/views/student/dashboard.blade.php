@@ -90,15 +90,19 @@
         <div class="circle">
            <h4>Experience Form</h4>
            @if ($user->planReport)
-            @if (!$rating)
-               <p>Waiting For Your Submit</p>
+            @if ($user->planReport->training_type == 'online')
+               <p>Your Trainig type is Online</p>
             @else
-               @if ($rating->status == 0)
-                  <p>Submitted and waiting for approval</p>
-               @elseif ($rating->status == 1)
-                  <p>Approved</p>
-               @elseif ($rating->status == 2)
-                  <p>Rejected</p>
+               @if (!$rating)
+                  <p>Waiting For Your Submit</p>
+               @else
+                  @if ($rating->status == 0)
+                     <p>Submitted and waiting for approval</p>
+                  @elseif ($rating->status == 1)
+                     <p>Approved</p>
+                  @elseif ($rating->status == 2)
+                     <p>Rejected</p>
+                @endif
                @endif
             @endif
             @else
@@ -106,17 +110,21 @@
            @endif
         </div>
          @if ($user->planReport)
-               @if (!$rating)
-                  <a href="{{ route('student.experiance-form') }}" class="tvar tvar-default"><i class="fa-solid fa-pen"></i></a>
+            @if ($user->planReport->training_type == 'online')
+               <a href="" class="tvar tvar-waiting"><i class="fa-solid fa-smile"></i></a>
                @else
-                  @if ($rating->status == 0)
-                  <a href="" class="tvar tvar-warning"><i class="fa-solid fa-clock"></i></a>
-                  @elseif ($rating->status == 1)
-                  <a href="" class="tvar tvar-success"><i class="fa-solid fa-check"></i></a>
-                  @elseif ($rating->status == 2)
-                  <a href="" class="tvar tvar-danger"><i class="fa-solid fa-xmark"></i></a>
+                  @if (!$rating)
+                  <a href="{{ route('student.experiance-form') }}" class="tvar tvar-default"><i class="fa-solid fa-pen"></i></a>
+                  @else
+                     @if ($rating->status == 0)
+                     <a href="" class="tvar tvar-warning"><i class="fa-solid fa-clock"></i></a>
+                     @elseif ($rating->status == 1)
+                     <a href="" class="tvar tvar-success"><i class="fa-solid fa-check"></i></a>
+                     @elseif ($rating->status == 2)
+                     <a href="" class="tvar tvar-danger"><i class="fa-solid fa-xmark"></i></a>
+                     @endif
                   @endif
-               @endif
+            @endif
          @else
             <a href="" class="tvar tvar-waiting"><i class="fa-solid fa-file"></i></a>
          @endif

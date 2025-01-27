@@ -20,23 +20,45 @@
             <div class="row">
                 @foreach ($organizations as $org)
                     <div class="col-md-4 mt-2 mb-2">
-                        <div class="card mt-1 mb-1">
-                            <div class="card-body">
-                                <h6>{{ $org->name }}</h6>
-                                <small>Total Rating: {{ $org->ratings->count() }}</small>
-                                <br>
-                                @php
-                                $averageRating = round($org->ratings->avg('rating') ?? 0); // Round to nearest whole number
-                            @endphp
-                            @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $averageRating)
-                                    <span class="filled-star">★</span> <!-- Filled Star -->
-                                @else
-                                    <span class="filled-star">☆</span> <!-- Empty Star -->
-                                @endif
-                            @endfor
+                        @if ($org->ratings->count() > 0)
+                            <a href="{{ route('fillter.orgnization', $org->name) }}" class="orgcard">
+                                <div class="card mt-1 mb-1">
+                                    <div class="card-body">
+                                        <h6>{{ $org->name }}</h6>
+                                        <small>Total Rating: {{ $org->ratings->count() }}</small>
+                                        <br>
+                                        @php
+                                        $averageRating = round($org->ratings->avg('rating') ?? 0); // Round to nearest whole number
+                                    @endphp
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $averageRating)
+                                            <span class="filled-star">★</span> <!-- Filled Star -->
+                                        @else
+                                            <span class="filled-star">☆</span> <!-- Empty Star -->
+                                        @endif
+                                    @endfor
+                                    </div>
+                                </div>
+                            </a>
+                        @else
+                            <div class="card mt-1 mb-1">
+                                <div class="card-body">
+                                    <h6>{{ $org->name }}</h6>
+                                    <small>Total Rating: {{ $org->ratings->count() }}</small>
+                                    <br>
+                                    @php
+                                    $averageRating = round($org->ratings->avg('rating') ?? 0); // Round to nearest whole number
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $averageRating)
+                                        <span class="filled-star">★</span> <!-- Filled Star -->
+                                    @else
+                                        <span class="filled-star">☆</span> <!-- Empty Star -->
+                                    @endif
+                                @endfor
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 @endforeach
             </div>
