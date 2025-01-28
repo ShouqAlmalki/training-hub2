@@ -68,28 +68,28 @@
                         </div>
                         @if ($student->planReport->training_type == 'hybrid' || $student->planReport->training_type == 'onsite')
                             <div class="col-md-6 mt-1 mb-1">
-                                <label for="start_date">Organization Name</label>   
+                                <label for="start_date">Organization Name</label>
                                 <input type="text" class="form-control" value="{{ $organization->name }}" disabled>
                             </div>
                             <div class="col-md-6 mt-1 mb-1">
-                                <label for="start_date">Organization Supervisor Name</label>   
+                                <label for="start_date">Organization Supervisor Name</label>
                                 <input type="text" class="form-control" value="{{ $student->planReport->org_sub_name }}" disabled>
                             </div>
                             <div class="col-md-6 mt-1 mb-1">
-                                <label for="start_date">Organization Supervisor Email</label>   
+                                <label for="start_date">Organization Supervisor Email</label>
                                 <input type="text" class="form-control" value="{{ $student->planReport->org_sub_email }}" disabled>
                             </div>
                             <div class="col-md-6 mt-1 mb-1">
-                                <label for="start_date">Organization Supervisor Phone</label>   
+                                <label for="start_date">Organization Supervisor Phone</label>
                                 <input type="text" class="form-control" value="{{ $student->planReport->org_sub_phone }}" disabled>
                             </div>
                             <div class="col-md-6 mt-1 mb-1">
-                                <label for="start_date">Organization Supervisor Department</label>   
+                                <label for="start_date">Organization Supervisor Department</label>
                                 <input type="text" class="form-control" value="{{ $student->planReport->org_sub_department }}" disabled>
                             </div>
                         @endif
                         <div class="col-md-6 mt-1 mb-1">
-                            <label for="start_date">This report created at</label>   
+                            <label for="start_date">This report created at</label>
                             <input type="text" class="form-control" value="{{ $student->planReport->created_at->format('d-M-Y') }}" disabled>
                         </div>
                     </div>
@@ -165,25 +165,31 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    @if ($student->weeklyReport->status == 0)
-                        <form method="POST" action="{{ route('supervisor.weeklyForm.reject', $student->weeklyReport->id) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Reject</button>
-                        </form>
-                        <form method="POST" action="{{ route('supervisor.weeklyForm.accept', $student->weeklyReport->id) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-success">Accept</button>
-                        </form>
-                        @elseif ($student->weeklyReport->status == 2)
-                            <form method="POST" action="{{ route('supervisor.weeklyForm.accept', $student->weeklyReport->id) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-success">Accept</button>
-                            </form>
-                        @elseif ($student->weeklyReport->status == 1)
+                    @if($weeklyreport->week_number == 8)
+                        @if ($student->weeklyReport->status == 0)
                             <form method="POST" action="{{ route('supervisor.weeklyForm.reject', $student->weeklyReport->id) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Reject</button>
                             </form>
+                            <form method="POST" action="{{ route('supervisor.weeklyForm.accept', $student->weeklyReport->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Accept</button>
+                            </form>
+                            @elseif ($student->weeklyReport->status == 2)
+                                <form method="POST" action="{{ route('supervisor.weeklyForm.accept', $student->weeklyReport->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Accept</button>
+                                </form>
+                            @elseif ($student->weeklyReport->status == 1)
+                                <form method="POST" action="{{ route('supervisor.weeklyForm.reject', $student->weeklyReport->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                </form>
+                        @endif
+                    @else
+                        <div class="alert alert-info d-flex align-items-center text-center text-white" role="alert">
+                            <p>No action can be taken until the student completes the week 8 report.</p>
+                        </div>
                     @endif
                 </div>
             </div>
@@ -306,5 +312,5 @@
             </div>
         </div>
     </div>
-    @endif        
+    @endif
 @endforeach

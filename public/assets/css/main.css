@@ -201,3 +201,9 @@ button:disabled {
   .orgcard {
     text-decoration: none;
   }
+  .modal {
+      z-index: 99999;
+  }
+.sidenav {
+    z-index: 3 !important;
+}
