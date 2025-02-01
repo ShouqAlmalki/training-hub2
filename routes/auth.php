@@ -18,5 +18,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('experiance', [ExperienceController::class, 'index'])->name('experiance');
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout'); {{-- --}}
+        ->name('logout'); {{--comment --}}
 });
