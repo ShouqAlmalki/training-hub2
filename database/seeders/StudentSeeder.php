@@ -133,14 +133,6 @@ class StudentSeeder extends Seeder
                 "supervisor_id"=> 5,
                 "section_number"=> 105,
             ],
-            [
-                "name"=> "Mahmoud Student",
-                "email"=> "mahmoud@student.com",
-                "password"=> bcrypt("password"),
-                "role"=> "student",
-                "supervisor_id"=> 6,
-                "section_number"=> 106,
-            ],
             
         ];
         User::insert($students);

@@ -11,27 +11,27 @@
               <div class="row">
                   <div class="col-md-6 mt-3 mb-2">
                       <label for="introduction">introduction <span class="required">*</span></label>
-                      <input type="text" name="introduction" id="introduction" class="form-control" required>
+                      <input type="text" name="introduction" id="introduction" class="form-control" placeholder="Describe your completed training..." required>
                   </div>
                   <div class="col-md-6 mt-3 mb-2">
                     <label for="training_plan">Training Plan <span class="required">*</span></label>
-                    <input type="text" name="training_plan" id="training_plan" class="form-control" required>
+                    <input type="text" name="training_plan" id="training_plan" class="form-control" placeholder="Outline your training objectives and schedule..." required>
                   </div>
                   <div class="col-md-6 mt-3 mb-2">
                     <label for="overall_experiance">Overall Experiance <span class="required">*</span></label>
-                    <input type="text" name="overall_experiance" id="overall_experiance" class="form-control" required>
+                    <input type="text" name="overall_experiance" id="overall_experiance" class="form-control" placeholder="Share your overall thoughts on the training..." required>
                   </div>
                   <div class="col-md-6 mt-3 mb-2">
                     <label for="recommendations">Recommendations <span class="required">*</span></label>
-                    <input type="text" name="recommendations" id="recommendations" class="form-control" required>
+                    <input type="text" name="recommendations" id="recommendations" class="form-control" placeholder="What would you recommend for others?" required>
                   </div>
                   <div class="col-md-6 mt-3 mb-2">
                     <label for="conclusion">Conclusion <span class="required">*</span></label>
-                    <input type="text" name="conclusion" id="conclusion" class="form-control" required>
+                    <input type="text" name="conclusion" id="conclusion" class="form-control" placeholder="Summarize your final thoughts on the training..." required>
                   </div>
                   <div class="col-md-6 mt-3 mb-2">
                     <label for="reference">Reference</label>
-                    <input type="text" name="reference" id="reference" class="form-control">
+                    <input type="text" name="reference" id="reference" class="form-control" placeholder="List any sources or materials used..." >
                   </div>
               </div>
               <button type="submit" class="btn bg-gradient-dark mt-3" id="submitButton" disabled>Submit</button>

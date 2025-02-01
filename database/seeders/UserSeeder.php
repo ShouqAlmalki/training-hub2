@@ -49,13 +49,6 @@ class UserSeeder extends Seeder
                 "role"=> "supervisor",
                 "section_number"=> 105
             ],
-            [
-                "name"=> "Mahmoud Supervisor",
-                "email"=> "mahmoud@supervisor.com",
-                "password"=> bcrypt("password"),
-                "role"=> "supervisor",
-                "section_number"=> 106
-            ],
         ];
         User::insert($users);
     }

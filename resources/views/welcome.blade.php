@@ -9,211 +9,100 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <title>Training Hub</title>
     <style>
-              .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+        .orgcard {
+            text-decoration: none;
+            color: inherit;
         }
-      }
+        
+        .card {
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
 
-      .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
+        .filled-star {
+            font-size: 18px;
+            color: gold;
+        }
 
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
+        .empty-star {
+            font-size: 18px;
+            color: lightgray;
+        }
 
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-        --bs-btn-font-weight: 600;
-        --bs-btn-color: var(--bs-white);
-        --bs-btn-bg: var(--bd-violet-bg);
-        --bs-btn-border-color: var(--bd-violet-bg);
-        --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
-        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-        --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
-      }
-
-      .bd-mode-toggle {
-        z-index: 1500;
-      }
-
-      .bd-mode-toggle .dropdown-menu .active .bi {
-        display: block !important;
-      }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-          <div class="col-md-3 mb-2 mb-md-0">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-              <img src="{{ asset('assets/images/TrainingHub-logo.png') }}" alt="logo" width="200">
-            </a>
-          </div>
-          @auth
-              @if (auth()->user()->role == 'student')
-                  <div class="col-md-3 text-end">
-                      <a href="{{ route('student.dashboard') }}" type="button" class="btn btn-outline-primary me-2">Dashboard</a>
-                  </div>
-              @elseif (auth()->user()->role == 'supervisor')
-                  <div class="col-md-3 text-end">
-                      <a href="{{ route('supervisor.dashboard') }}" type="button" class="btn btn-outline-primary me-2">Dashboard</a>
-                  </div>
-              @endif
-            
-          @endauth
-          @guest
-              <div class="col-md-3 text-end">
-                  <a href="{{ route('login') }}" type="button" class="btn btn-outline-primary me-2">Login</a>
-              </div>
-          @endguest
-        </header>
-      </div>
-
-      <div class="bg-dark text-secondary px-4 py-5 text-center">
-        <div class="py-5">
-          <h1 class="display-5 fw-bold text-white">Training Hub</h1>
-          <div class="col-lg-6 mx-auto">
-            <p class="fs-5 mb-4">A platform that brings together the student and his supervisor during <br> training. It helps them communicate, attach reports, and share the <br> student's experience in the institution in which he trained</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <h4 class="mb-2 mt-3">Recent Experience</h4>
-        <div class="row">
-          <form id="organizationFilterForm" method="post">
-            @csrf
-            <div class="col-md-12 mt-2">
-                <select name="organizationFilter" class="form-select" id="organizationFilter">
-                    <option value="">Select Organization</option>
-                    @foreach ($organizations as $organization)
-                        <option value="{{ $organization->id }}">{{ $organization->name }}</option>
-                    @endforeach
-                </select>
+        <header class="d-flex flex-wrap align-items-center justify-content-between py-3">
+            <div class="col-md-3">
+                <a href="/" class="d-inline-flex text-decoration-none">
+                    <img src="{{ asset('assets/images/TrainingHub-logo.png') }}" alt="logo" width="200">
+                </a>
             </div>
-          </form>
-            @foreach ($organizations as $organization)
-                <div class="col-md-4 mt-2 mb-2">
-                  @if ($organization->ratings->count() > 0)
-                    <a href="{{ route('fillter.orgnization', $organization->name) }}" class="orgcard">
-                      <div class="card">
-                          <div class="card-body">
-                              <h5 class="card-title">{{ $organization->name }}</h5>
-                              <small>
-                                  Total Rating: {{ $organization->ratings->count() }}
-                              </small>
-                              <br>
-                              @php
-                                  $averageRating = round($organization->ratings->avg('rating') ?? 0); // Round to nearest whole number
-                              @endphp
-                              @for ($i = 1; $i <= 5; $i++)
-                                  @if ($i <= $averageRating)
-                                      <span class="filled-star">★</span> <!-- Filled Star -->
-                                  @else
-                                      <span class="filled-star">☆</span> <!-- Empty Star -->
-                                  @endif
-                              @endfor
-                          </div>
-                      </div>
+
+            @auth
+                <div class="col-md-3 text-end">
+                    <a href="{{ auth()->user()->role == 'student' ? route('student.dashboard') : route('supervisor.dashboard') }}" 
+                       class="btn btn-outline-primary">
+                       Dashboard
                     </a>
-                  @else
-                    <div class="card">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ $organization->name }}</h5>
-                          <small>
-                              Total Rating: {{ $organization->ratings->count() }}
-                          </small>
-                          <br>
-                          @php
-                              $averageRating = round($organization->ratings->avg('rating') ?? 0); // Round to nearest whole number
-                          @endphp
-                          @for ($i = 1; $i <= 5; $i++)
-                              @if ($i <= $averageRating)
-                                  <span class="filled-star">★</span> <!-- Filled Star -->
-                              @else
-                                  <span class="filled-star">☆</span> <!-- Empty Star -->
-                              @endif
-                          @endfor
-                      </div>
-                    </div>
-                  @endif
+                </div>
+            @endauth
+
+            @guest
+                <div class="col-md-3 text-end">
+                    <a href="{{ route('login') }}" class="btn btn-outline-primary">Login</a>
+                </div>
+            @endguest
+        </header>
+    </div>
+
+    <div class="bg-dark text-light text-center py-5">
+        <h1 class="display-5 fw-bold">Training Hub</h1>
+        <p class="fs-5 mt-3">
+            A platform that connects students with their supervisors during training.<br>
+            It facilitates communication, report submissions, and experience sharing.
+        </p>
+    </div>
+
+    <div class="container">
+        <h4 class="mb-3 mt-4 header-title">Recent Experiences</h4>
+        <div class="row">
+            @foreach ($organizations as $organization)
+                <div class="col-md-4 mb-3">
+                    <a href="{{ route('fillter.orgnization', $organization->name) }}" class="orgcard">
+                        <div class="card shadow">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ $organization->name }}</h5>
+                                <p class="mb-1"><small>Total Ratings: {{ $organization->ratings->count() }}</small></p>
+                                
+                                @php
+                                    $averageRating = round($organization->ratings->avg('rating') ?? 0);
+                                @endphp
+                                <div>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <span class="{{ $i <= $averageRating ? 'filled-star' : 'empty-star' }}">★</span>
+                                    @endfor
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             @endforeach
         </div>
-      </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-{{-- <script>
-  $(document).ready(function () {
-      $('#organizationFilter').on('change', function () {
-          const organizationId = $(this).val(); // Get selected organization ID
+    </div>
 
-          if (organizationId) {
-              $.ajax({
-                  url: "{{ route('fillter.orgnization', ':id') }}".replace(':id', organizationId),
-                  method: 'POST',
-                  data: {
-                      _token: "{{ csrf_token() }}", // CSRF token for security
-                      organizationFilter: organizationId,
-                  },
-                  success: function (response) {
-                      // Handle success response (e.g., update UI or show a message)
-                      console.log(response);
-                  },
-                  error: function (xhr) {
-                      // Handle error response
-                      console.error(xhr.responseText);
-                  },
-              });
-          }
-      });
-  });
-</script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>

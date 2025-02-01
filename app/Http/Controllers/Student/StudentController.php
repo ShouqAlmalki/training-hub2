@@ -22,4 +22,7 @@ class StudentController extends Controller
         $notifications = auth()->user()->notifications;
         return view("student.dashboard", compact("user", "planreport", "weeklyreport", "finalreport", "rating", "websiterating", "notifications" ));
     }
+
+
+
 }

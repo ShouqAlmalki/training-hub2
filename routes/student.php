@@ -24,4 +24,7 @@ Route::middleware(['auth', RoleMiddleware::class])->group(function () {
 
     Route::get('/student/chat', [StudentChatController::class, 'studentChat'])->name('student.chat');
     Route::post('/student-chat/send', [StudentChatController::class, 'studentSend'])->name('student.chat.send');
+
+    Route::get('/student/reports', [StudentReportController::class, 'index'])->name('student.reports');
+
 });

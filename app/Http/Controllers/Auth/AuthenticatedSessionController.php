@@ -24,18 +24,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $request->authenticate();// يتحقق من بيانات المستخدم
 
-        $request->session()->regenerate();
+        $request->session()->regenerate();// يحمي الجلسة من الاختراقات
 
-        $user = Auth::user();
+        $user = Auth::user(); // الحصول على المستخدم المسجل دخوله
         if ($user->role === 'student') {    
-                return redirect()->route('student.dashboard');
+                return redirect()->route('student.dashboard');// توجيه الطالب للوحة التحكم الخاصة به
         }elseif ($user->role === 'supervisor') {
-                return redirect()->route('supervisor.dashboard');
+                return redirect()->route('supervisor.dashboard');// توجيه المشرف للوحة التحكم الخاصة به
         }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('dashboard', absolute: false));// توجيه المستخدم العام للداشبورد
     }
 
     /**
@@ -43,12 +43,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard('web')->logout();// تسجيل خروج المستخدم
 
-        $request->session()->invalidate();
+        $request->session()->invalidate();// حذف الجلسة الحالية
 
-        $request->session()->regenerateToken();
+        $request->session()->regenerateToken();// إعادة إنشاء CSRF Token لحماية الجلسة
 
-        return redirect('/');
+        return redirect('/');// إعادة توجيه المستخدم إلى الصفحة الرئيسية
     }
 }

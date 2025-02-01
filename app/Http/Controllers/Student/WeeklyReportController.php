@@ -12,8 +12,11 @@ class WeeklyReportController extends Controller
     {
         $user = auth()->user();
         $weeklyreport = WeeklyReport::where("user_id", $user->id)->latest()->first();
+        $weeklyreports = WeeklyReport::where("user_id", $user->id)->get(); 
+    
+
         $notifications = auth()->user()->notifications;
-        return view("student.weeklyForm", compact("user", "weeklyreport", "notifications"));
+        return view("student.weeklyForm", compact("user", "weeklyreport", "weeklyreports", "notifications"));
     }
 
     public function store(Request $request)
